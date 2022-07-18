@@ -1,0 +1,4 @@
+minio==6.0.2
+Django==3.1.7
+confluent-kafka==1.6.1
+#rm==2020.12.3
