@@ -112,19 +112,15 @@ def judge(players, map_id, game_id) -> [Event]:
     # downloading players code
     for index, player in enumerate(players):
         if not download_code(player, f"/etc/spawn/{index+1}"):
-            resulting_events.append(Event(token=player, status_code=EventStatus.FILE_NOT_FOUND.value,
-                         title='failed to fetch the compiled code!'))
-            resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_NOT_PROVIDED.value,
-                         title='failed to fetch clients code!'))
+            resulting_events.append(Event(token=player, status_code=EventStatus.FILE_NOT_FOUND.value,title='failed to fetch the compiled code!'))
+            resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_NOT_PROVIDED.value,title='failed to fetch clients code!'))
 
             return resulting_events
 
     # download map
     if not download_map(map_id, f"{match_base_dir}/map"):
-        resulting_events.append(Event(token=map_id, status_code=EventStatus.FILE_NOT_FOUND.value,
-                     title='failed to fetch the map!'))
-        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_NOT_PROVIDED.value,
-                         title='failed to fetch the map!'))
+        resulting_events.append(Event(token=map_id, status_code=EventStatus.FILE_NOT_FOUND.value,title='failed to fetch the map!'))
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_NOT_PROVIDED.value,title='failed to fetch the map!'))
         return resulting_events
 
     # run match
@@ -137,14 +133,11 @@ def judge(players, map_id, game_id) -> [Event]:
         logger.warning("failed fo fetch match stats")
     
     if exit_code == -1:
-        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_FAILED.value,
-                                title='failed to hold the match', message_body=stats))
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_FAILED.value,title='failed to hold the match', message_body=stats))
     elif exit_code == -2:
-        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_TIMEOUT.value,
-                                title='match timeout exceeded', message_body=stats))   
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_TIMEOUT.value,title='match timeout exceeded', message_body=stats))   
     elif exit_code == 0:
-        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_SUCCESS.value,
-                 title='match finished successfully!', message_body=stats))
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_SUCCESS.value,title='match finished successfully!', message_body=stats))
     
 
     # used for uploading clients logs if needed
@@ -165,7 +158,7 @@ def judge(players, map_id, game_id) -> [Event]:
                             title='failed to upload the game log!'))
     except:
         logger.warning(f"file {match_record_path} didnt exist!")
-   
+        
     # upload server log
     with open(match_log_path, 'rb') as file:
         if not MinioClient.upload_logs(path=game_id, file=file, file_name=f'{game_id}.out'):

@@ -1,12 +1,12 @@
 # FROM reg.aichallenge.ir/aic/infra/final_judgment :486-b2af3cf0  
-#FROM reg.aichallenge.ir/python:3.8
+FROM reg.aichallenge.ir/python:3.8
 
-#RUN apt-get update && \
-#apt install -y default-jre vim curl gettext
+RUN apt-get update && \
+apt install -y default-jre vim curl gettext
 
 
 # log directory
-#RUN mkdir -p /var/log/final-judgment
+RUN mkdir -p /var/log/final-judgment
 
 
 #################################### install final_judgment ########################### 
