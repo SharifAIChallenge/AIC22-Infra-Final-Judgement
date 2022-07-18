@@ -1,57 +1,34 @@
 stages:
-  - publish-image
+  - build
   - deploy-production
 
+#workflow:
+#  rules:
+#    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_PROTECTED == "false"'
+#      when: never
+#    - if: '$CI_COMMIT_BRANCH == "master"'
+#      when: always
+#    - if: '$CI_COMMIT_BRANCH == "dev"'
+#      when: always
+#    - when: never
+
 variables:
-  IMAGE_TAG: $CI_PIPELINE_ID-$CI_COMMIT_SHORT_SHA
-  IMAGE_URL: $SSC_REGISTRY_URL/$CI_PROJECT_PATH:$CI_PIPELINE_ID-$CI_COMMIT_SHORT_SHA
+  IMAGE_URL: reg.aichallenge.ir/aic22-infra-judement:$CI_PIPELINE_ID-$CI_COMMIT_SHORT_SHA
 
-workflow:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      when: always
-    - when: never
-  
-var-check:
-  stage: publish-image
-  image:
-    name: reg.aichallenge.ir/alpine:latest
-    entrypoint: [""]
-
-  before_script:
-    - echo "service == $SERVICE_NAME"
-    - echo "reg ====== $SSC_REGISTRY_URL"
-    - echo "image tag == $IMAGE_TAG"
-    - echo "image url == $IMAGE_URL"
+build:
+  stage: build
+  image: reg.aichallenge.ir/docker:19.03.12
+  tags:
+    - docker
   script:
-   - echo "ip ======== $SWARM_MANAGER_SERVER"
-  
-build-push-image:
-  stage: publish-image
-  image:
-    name: $SSC_REGISTRY_URL/kaniko:debug
-    entrypoint: [""]
+    - docker build . -t $IMAGE_URL
+    - docker push $IMAGE_URL
 
-  before_script:
-    - sudo mkdir -p /kaniko/.docker/
-    - echo "{\"auths\":{\"$SSC_REGISTRY_URL\":{\"username\":\"$SSC_REGISTRY_USERNAME\",\"password\":\"$SSC_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - echo pushing image $IMAGE_URL to registry
-  script:
-   - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $IMAGE_URL
 
 deploy-production:
   stage: deploy-production
   image: kroniak/ssh-client:latest
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "master"'
-      when: on_success
   before_script:
-    - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-    - chmod 700 ~/.ssh/id_rsa
-    - eval "$(ssh-agent -s)"
-    - ssh-add ~/.ssh/id_rsa
-    - FINAL_SERVICE_NAME=infra_$SERVICE_NAME
+    - chmod -R 700 $SSH_PRIVATE_KEY
   script:
-    - ssh -o "StrictHostKeyChecking=no" root@$SWARM_MANAGER_SERVER -p$SWARM_MANAGER_SERVER_SSH_PORT -t "docker service update --image $IMAGE_URL $FINAL_SERVICE_NAME"
-
+    - ssh -i $SSH_PRIVATE_KEY -o "StrictHostKeyChecking=no" ubuntu@94.101.187.20 -t "docker service update --image $IMAGE_URL infra_judement"
