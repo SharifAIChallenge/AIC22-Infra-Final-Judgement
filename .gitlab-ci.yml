@@ -33,7 +33,7 @@ build-push-image:
     entrypoint: [""]
 
   before_script:
-    - mkdir -p /kaniko/.docker/
+    - sudo mkdir -p /kaniko/.docker/
     - echo "{\"auths\":{\"$SSC_REGISTRY_URL\":{\"username\":\"$SSC_REGISTRY_USERNAME\",\"password\":\"$SSC_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - echo pushing image $IMAGE_URL to registry
   script:
