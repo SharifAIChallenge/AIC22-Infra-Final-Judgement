@@ -11,10 +11,7 @@ MINIO_ACCESS_KEY = getenv('MINIO_ACCESS_KEY')
 MINIO_SECRET_KEY = getenv('MINIO_SECRET_KEY')
 
 client = Minio(
-    MINIO_ENDPOINT,
-    access_key=MINIO_ACCESS_KEY,
-    secret_key=MINIO_SECRET_KEY,
-    secure=False
+    MINIO_ENDPOINT
 )
 logger.info("client is built and connected")
 
