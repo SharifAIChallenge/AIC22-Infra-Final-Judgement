@@ -47,3 +47,5 @@ chmod +x /usr/bin/spawn1 && \
 chmod +x /usr/bin/spawn2 
 
 WORKDIR /home/src
+
+CMD ["python3", "main.py"]
