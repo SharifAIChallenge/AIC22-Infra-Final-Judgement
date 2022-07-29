@@ -10,7 +10,8 @@ logger=logging.getLogger("match_queue")
 
 KAFKA_ENDPOINT = getenv('KAFKA_ENDPOINT')
 KAFKA_TOPIC_CONSUMER_GROUP = getenv('KAFKA_TOPIC_CONSUMER_GROUP')
-KAFKA_TOPIC_MATCH = getenv('KAFKA_TOPIC_MATCH')
+KAFKA_TOPIC_MATCH_0 = getenv('KAFKA_TOPIC_MATCH_0')
+KAFKA_TOPIC_MATCH_1 = getenv('KAFKA_TOPIC_MATCH_1')
 
 
 match_consumer = Consumer({
@@ -24,7 +25,7 @@ match_consumer = Consumer({
     'max.poll.interval.ms': 30*60*1000,  #30 minutes
     'heartbeat.interval.ms': 1*1000     #1 seconds
 })
-match_consumer.subscribe([KAFKA_TOPIC_MATCH])
+match_consumer.subscribe([KAFKA_TOPIC_MATCH_0, KAFKA_TOPIC_MATCH_1])
 
 
 fetched=[]
