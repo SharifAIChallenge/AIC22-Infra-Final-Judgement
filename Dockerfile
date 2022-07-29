@@ -30,7 +30,8 @@ curl -s https://github.com/SharifAIChallenge/AIC22-Server/releases/publish | gre
 # install match 
 COPY scripts/match.sh /usr/bin/match
 RUN chmod +x /usr/bin/match
-
+RUN mkdir -p /tmp/match/Log/server
+RUN touch /tmp/match/Log/server/server.log
 
 ################################### install spawn #####################################
 COPY scripts/spawn.sh /usr/bin/spawn
