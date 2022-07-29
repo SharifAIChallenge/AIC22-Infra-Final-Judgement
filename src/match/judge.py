@@ -18,7 +18,7 @@ match_base_dir="/tmp/match"
 match_record_path = f"{match_base_dir}/log.json"
 match_log_path = f"{match_base_dir}/Log/server/server.log"
 match_timeout= int(os.getenv("MATCH_TIMEOUT"))
-match_runcommand=["match", "--first-team=/etc/spawn/1", "--second-team=/etc/spawn/2", "--read-map=map"]
+match_runcommand=["match", "--first-team=/etc/spawn/1", "--second-team=/etc/spawn/2", "map"]
 
 def download_code(code_id, dest) -> bool:
     logger.info(f"start processing code [{code_id}]")
