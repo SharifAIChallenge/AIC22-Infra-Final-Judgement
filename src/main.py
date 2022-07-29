@@ -4,7 +4,7 @@ import log
 import traceback
 from match import match_queue as mq
 
-print("is ready", fluhs=True)
+print("is ready", flush=True)
 log.init()
 logger=logging.getLogger("main")
 
