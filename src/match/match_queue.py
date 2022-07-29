@@ -1,7 +1,7 @@
 from confluent_kafka import Consumer
 from os import getenv
 import logging
-import json
+import json, ast
 from socket import gethostname
 
 from match.match import Match
@@ -44,8 +44,8 @@ def fetch() -> Match:
         command = json.loads(msg.value().decode('utf-8'))
         logger.info(f"match is :{command}")
         player_ids = command['player_ids']
-        if len(player_ids) > 0 and player_ids[0] is str:
-            player_ids = json.loads(player_ids[0])
+        if len(player_ids) == 1 and player_ids[0] is str:
+            player_ids = ast.literal_eval(player_ids[0])
         m=Match(game_id=command['game_id'],map_id=command['map_id'],player_ids=player_ids)
         fetched.append((m.game_id,msg))
         return m
