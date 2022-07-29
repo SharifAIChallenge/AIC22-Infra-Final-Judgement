@@ -4,19 +4,21 @@ import log
 import traceback
 from match import match_queue as mq
 
-print("is ready")
+print("is ready", fluhs=True)
 log.init()
 logger=logging.getLogger("main")
 
 while True:
     token=""
     try:
+        print("Wating for new games ...", flush=True)
         match=mq.fetch()
         if not match:
             continue
         
         token=match.game_id
-        # log.new_token_logger(token)
+        print(f"game_id: {token}", flush=True)
+        log.new_token_logger(token)
         events.push(events.Event(token=token, status_code=events.EventStatus.MATCH_STARTED.value,title='match started successfully!'))
         
         event_list = match.hold()
@@ -28,5 +30,5 @@ while True:
     except Exception as e:
         traceback.print_exc()
         logger.exception(f"an error accoured {e}")
-    # finally:
-        # log.remove_token_logger(token)
+    finally:
+        log.remove_token_logger(token)
