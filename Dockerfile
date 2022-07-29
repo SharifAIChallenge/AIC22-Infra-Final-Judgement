@@ -1,6 +1,6 @@
 # FROM reg.aichallenge.ir/aic/infra/final_judgment :486-b2af3cf0  
 FROM reg.aichallenge.ir/python:3.8
-
+RUN apt install software-properties-common -y && apt update
 RUN add-apt-repository ppa:linuxuprising/java && apt-get update && \
 apt install -y oracle-java16-installer vim curl gettext
 
