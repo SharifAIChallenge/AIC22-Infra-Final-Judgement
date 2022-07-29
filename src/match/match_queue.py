@@ -40,9 +40,10 @@ def fetch() -> Match:
         return None
     
     try:
+        print(msg.value().decode('utf-8'))
         command = json.loads(msg.value().decode('utf-8'))
         logger.info(f"match is :{command}")
-        
+         
         m=Match(game_id=command['game_id'],map_id=command['map_id'],player_ids=command['player_ids'])
         fetched.append((m.game_id,msg))
         return m
