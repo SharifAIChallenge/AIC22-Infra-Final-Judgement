@@ -1,6 +1,9 @@
 # FROM reg.aichallenge.ir/aic/infra/final_judgment :486-b2af3cf0  
 FROM reg.aichallenge.ir/python:3.8 
-RUN apt-get update && apt install -y vim curl gettext unrar-free 
+RUN apt-get update && apt install -y vim curl gettext unrar-free libc6-i386 libc6-x32
+
+RUN wget -O java https://dl.downloadly.ir/Files/Software/Java_SE_Development_Kit_18.0.2_Linux_Debian_x64_Downloadly.ir.rar && \
+unrar java && cd "Java SE Development Kit 18.0.2 Linux Debian x64" && dpkg -i jdk-18_linux-x64_bin_Downloadly.ir.deb
 
 
 # log directory
