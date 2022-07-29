@@ -2,7 +2,7 @@
 FROM reg.aichallenge.ir/python:3.8 
 RUN apt update && apt install software-properties-common -y && apt update
 RUN  add-apt-repository ppa:webupd8team/java -y && apt-get update && \
-apt install -y oracle-java16-installer vim curl gettext
+apt install -y default-jre vim curl gettext
 
 
 # log directory
