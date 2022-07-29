@@ -1,8 +1,8 @@
 # FROM reg.aichallenge.ir/aic/infra/final_judgment :486-b2af3cf0  
 FROM reg.aichallenge.ir/python:3.8 
 RUN apt update && apt install software-properties-common -y && apt update
-RUN  add-apt-repository ppa:webupd8team/java -y && apt-get update && \
-apt install -y default-jre vim curl gettext
+RUN add-apt-repository ppa:openjdk-r/ppa -y && apt-get update && \
+apt install -y openjdk-16-jdk -y default-jre vim curl gettext
 
 
 # log directory
