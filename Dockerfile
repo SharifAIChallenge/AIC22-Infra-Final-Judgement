@@ -1,8 +1,8 @@
 # FROM reg.aichallenge.ir/aic/infra/final_judgment :486-b2af3cf0  
 FROM reg.aichallenge.ir/python:3.8
 
-RUN apt-get update && \
-apt install -y default-jre vim curl gettext
+RUN sudo add-apt-repository ppa:linuxuprising/java && apt-get update && \
+apt install -y oracle-java16-installer vim curl gettext
 
 
 # log directory
@@ -30,9 +30,6 @@ curl -s https://github.com/SharifAIChallenge/AIC22-Server/releases/publish | gre
 # install match 
 COPY scripts/match.sh /usr/bin/match
 RUN chmod +x /usr/bin/match
-RUN mkdir -p /tmp/match/Log/server
-RUN touch /tmp/match/Log/server/server.log
-
 ################################### install spawn #####################################
 COPY scripts/spawn.sh /usr/bin/spawn
 COPY scripts/spawn1.sh /usr/bin/spawn1
