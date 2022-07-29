@@ -23,7 +23,9 @@ ADD ./src ./src
 RUN mkdir -p /usr/local/match && \
 
 curl -s https://github.com/SharifAIChallenge/AIC22-Server/releases/publish \                                                            
-| grep -Eo "SharifAIChallenge/AIC22-Server/releases/download/publish/.*-([0-9]\.)*jar" \ | awk '{ print "curl -Ls https://github.com/"$0, "-o /usr/local/match/match.jar"}'
+| grep -Eo "SharifAIChallenge/AIC22-Server/releases/download/publish/.*-([0-9]\.)*jar" \
+| awk '{ print "curl -Ls https://github.com/"$0, "-o /usr/local/match/match.jar"}' \
+| bash
 
 # download server configfile
 # RUN curl "https://raw.githubusercontent.com/SharifAIChallenge/final-judgment/master/resources/map.config" > /usr/local/match/map.config
