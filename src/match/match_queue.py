@@ -45,7 +45,7 @@ def fetch() -> Match:
         logger.info(f"match is :{command}")
         player_ids = command['player_ids']
         print(type(player_ids), player_ids[0] if len(player_ids) > 0 else 'not list')
-        if len(player_ids) == 1 and player_ids[0] is str:
+        if len(player_ids) == 1 and type(player_ids[0]) == str:
             print("toosh")
             player_ids = ast.literal_eval(player_ids[0])
         m=Match(game_id=command['game_id'],map_id=command['map_id'],player_ids=player_ids)
