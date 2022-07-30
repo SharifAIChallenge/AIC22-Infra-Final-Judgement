@@ -1,5 +1,5 @@
 # FROM reg.aichallenge.ir/aic/infra/final_judgment :486-b2af3cf0  
-FROM reg.aichallenge.ir/python:3.8 
+FROM reg.aichallenge.ir/python:3.10
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt install -y vim curl gettext unrar-free libc6-i386 libc6-x32 libasound2 libxi6 libxtst6
 ADD ./java /tmp
