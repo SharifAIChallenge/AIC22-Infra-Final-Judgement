@@ -44,6 +44,6 @@ chmod +x /usr/bin/spawn1 && \
 chmod +x /usr/bin/spawn2 
 
 WORKDIR /home/src
-RUN export PATH=$PATH:/usr/lib/jvm/jdk-18/bin/
+ENV PATH= PATH=${PATH}:/usr/lib/jvm/jdk-18/bin/
 
 CMD ["python3", "main.py"]
