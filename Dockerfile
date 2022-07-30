@@ -3,6 +3,7 @@ FROM reg.aichallenge.ir/python:3.8
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt install -y vim curl gettext unrar-free libc6-i386 libc6-x32 libasound2 libxi6 libxtst6
 ADD ./java /tmp
+RUN mkdir -p /usr/bin
 RUN cd /tmp && \
  unrar Java_SE_Development_Kit_18.0.2_Linux_Debian_x64_Downloadly.ir.rar && \
  cd "Java SE Development Kit 18.0.2 Linux Debian x64" && \
