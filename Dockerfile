@@ -6,7 +6,7 @@ ADD ./java /tmp
 RUN cd /tmp && \
  unrar Java_SE_Development_Kit_18.0.2_Linux_Debian_x64_Downloadly.ir.rar && \
  cd "Java SE Development Kit 18.0.2 Linux Debian x64" && \
- dpkg -i jdk-18_linux-x64_bin_Downloadly.ir.deb
+ dpkg -i jdk-18_linux-x64_bin_Downloadly.ir.deb --instdir=/usr/bin
 
 
 # log directory
