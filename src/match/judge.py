@@ -165,7 +165,7 @@ def judge(players, map_id, game_id) -> [Event]:
         
     # upload server log
     with open(match_log_path, 'rb') as file:
-        if not MinioClient.upload_logs(path=game_id, file=file, file_name=f'{game_id}.out'):
+        if not MinioClient.upload_logs(path=game_id, file=file, file_name=f'{game_id}.log'):
             resulting_events.append(Event(token=game_id, status_code=EventStatus.UPLOAD_FAILED.value,
                         title='failed to upload the game server output!'))
 

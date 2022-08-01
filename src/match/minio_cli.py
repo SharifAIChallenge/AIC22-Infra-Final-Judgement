@@ -39,7 +39,7 @@ class MinioClient:
         bucket_name = BucketName.Log.value
         try:
             client.put_object(
-                bucket_name, f'{path}/{file_name}.zip', content, length=len(content), 
+                bucket_name, f'{path}/{file_name}', content, length=len(content), 
             )
             logger.info(f"object pushed to {bucket_name}/{path}/{file_name}")
             return True
