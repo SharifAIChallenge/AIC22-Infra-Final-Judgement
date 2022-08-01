@@ -76,7 +76,10 @@ def __judge() -> int:
         logger.warning("match timeout exiceded!")
         return -2
     except CalledProcessError as e:
-        print(e)
+        logger.info("================ END error =================")
+        print(e, flush=True)
+        logger.info(e)
+        logger.info("================ BEGIN error =================")
         logger.warning("match returned none zero exitcode!")
         return -1
     finally:
