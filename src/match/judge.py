@@ -126,19 +126,19 @@ def judge(players, map_id, game_id) -> [Event]:
 
     # run match
     exit_code=__judge()
-    try:
-        # extract the match stats      
-        stats = str(json.load(open(match_record_path))[STATS_KEYNAME])
-    except:
-        stats = ""
-        logger.warning("failed fo fetch match stats")
+    # try:
+    #     # extract the match stats      
+    #     stats = str(json.load(open(match_record_path))[STATS_KEYNAME])
+    # except:
+    #     stats = ""
+    #     logger.warning("failed fo fetch match stats")
     
-    if exit_code == -1:
-        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_FAILED.value,title='failed to hold the match', message_body=stats))
-    elif exit_code == -2:
-        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_TIMEOUT.value,title='match timeout exceeded', message_body=stats))   
-    elif exit_code == 0:
-        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_SUCCESS.value,title='match finished successfully!', message_body=stats))
+    # if exit_code == -1:
+    #     resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_FAILED.value,title='failed to hold the match', message_body=stats))
+    # elif exit_code == -2:
+    #     resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_TIMEOUT.value,title='match timeout exceeded', message_body=stats))   
+    # elif exit_code == 0:
+    #     resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_SUCCESS.value,title='match finished successfully!', message_body=stats))
     
 
     # used for uploading clients logs if needed
@@ -149,16 +149,16 @@ def judge(players, map_id, game_id) -> [Event]:
     #                          title='failed to upload the player log!')
 
     # upload game log
-    try:
-        # zip the file
-        os.system(f"(cd `dirname {match_record_path}` && tar -cvzf  temp.tgz `basename {match_record_path}` && mv temp.tgz `basename {match_record_path}`)")
-        # upload
-        with open(match_record_path, 'rb') as file:
-            if not MinioClient.upload_logs(path=game_id, file=file, file_name=game_id):
-                resulting_events.append(Event(token=game_id, status_code=EventStatus.UPLOAD_FAILED.value,
-                            title='failed to upload the game log!'))
-    except:
-        logger.warning(f"file {match_record_path} didnt exist!")
+    # try:
+    #     # zip the file
+    #     os.system(f"(cd `dirname {match_record_path}` && tar -cvzf  temp.tgz `basename {match_record_path}` && mv temp.tgz `basename {match_record_path}`)")
+    #     # upload
+    #     with open(match_record_path, 'rb') as file:
+    #         if not MinioClient.upload_logs(path=game_id, file=file, file_name=game_id):
+    #             resulting_events.append(Event(token=game_id, status_code=EventStatus.UPLOAD_FAILED.value,
+    #                         title='failed to upload the game log!'))
+    # except:
+    #     logger.warning(f"file {match_record_path} didnt exist!")
         
     # upload server log
     with open(match_log_path, 'rb') as file:
