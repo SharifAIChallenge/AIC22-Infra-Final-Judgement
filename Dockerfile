@@ -20,7 +20,8 @@ RUN mkdir -p /usr/local/match && \
 curl --silent "https://api.github.com/repos/SharifAIChallenge/AIC22-Server/releases/latest" \
 | grep -E "browser_download_url" \
 | cut -d : -f 2,3 \
-| tr -d \" | wget -qi - 
+| tr -d \" \
+| wget -O /usr/local/match/match.jar -i -
 # download server configfile
 # RUN curl "https://raw.githubusercontent.com/SharifAIChallenge/final-judgment/master/resources/map.config" > /usr/local/match/map.config
 
