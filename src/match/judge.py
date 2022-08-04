@@ -129,19 +129,20 @@ def judge(players, map_id, game_id) -> [Event]:
 
     # run match
     exit_code=__judge()
-    # try:
-    #     # extract the match stats      
-    #     stats = str(json.load(open(match_record_path))[STATS_KEYNAME])
-    # except:
-    #     stats = ""
-    #     logger.warning("failed fo fetch match stats")
+    try:
+        # extract the match stats      
+        stats = str(json.load(open(match_record_path))[STATS_KEYNAME])
+    except:
+        stats = ""
+        logger.warning("failed fo fetch match stats")
     
-    # if exit_code == -1:
-    #     resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_FAILED.value,title='failed to hold the match', message_body=stats))
-    # elif exit_code == -2:
-    #     resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_TIMEOUT.value,title='match timeout exceeded', message_body=stats))   
-    # elif exit_code == 0:
-    #     resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_SUCCESS.value,title='match finished successfully!', message_body=stats))
+    logging.info(f"Exit code: {exit_code}")
+    if exit_code == -1:
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_FAILED.value,title='failed to hold the match', message_body=stats))
+    elif exit_code == -2:
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_TIMEOUT.value,title='match timeout exceeded', message_body=stats))   
+    elif exit_code == 0:
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_SUCCESS.value,title='match finished successfully!', message_body=stats))
     
 
     # used for uploading clients logs if needed
