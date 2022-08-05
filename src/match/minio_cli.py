@@ -64,3 +64,12 @@ class MinioClient:
             return response.data
         except:
             return None
+
+    @staticmethod
+    def get_map_json(map_id):
+        try:
+            response = client.get_object("map-json", map_id)
+            logger.info(f"map with id {map_id} json retrieved successfully")
+            return response.data
+        except:
+            return None

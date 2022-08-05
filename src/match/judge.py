@@ -18,7 +18,7 @@ match_base_dir="/tmp/match"
 match_record_path = f"{match_base_dir}/logs/winner.log"
 match_log_path = f"{match_base_dir}/logs/server.log"
 match_timeout= int(os.getenv("MATCH_TIMEOUT"))
-match_runcommand=["match", "--first-team=/etc/spawn/1", "--second-team=/etc/spawn/2", "map"]
+match_runcommand=["match", "--first-team=/etc/spawn/1", "--second-team=/etc/spawn/2", "map", "map-json"]
 
 def download_code(code_id, dest) -> bool:
     logger.info(f"start processing code [{code_id}]")
@@ -64,6 +64,16 @@ def download_map(map_id, dest) -> bool:
     logger.info(f"map is stored to [{dest}] successfuly")
     return True
     
+def download_map_json(map_id, dest) -> bool:
+    zip_file = MinioClient.get_map_json(map_id)
+    if zip_file is None:
+        return False
+
+    with open(dest, 'wb') as f:
+        f.write(zip_file)
+    
+    logger.info(f"map is stored to [{dest}] successfuly")
+    return True
 
 
 def __judge() -> int:
@@ -126,6 +136,11 @@ def judge(players, map_id, game_id) -> [Event]:
         resulting_events.append(Event(token=map_id, status_code=EventStatus.FILE_NOT_FOUND.value,title='failed to fetch the map!'))
         resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_NOT_PROVIDED.value,title='failed to fetch the map!'))
         return resulting_events
+    
+    if not download_map_json(map_id, f"{match_base_dir}/map-json"):
+        resulting_events.append(Event(token=map_id, status_code=EventStatus.FILE_NOT_FOUND.value,title='failed to fetch the map json!'))
+        resulting_events.append(Event(token=game_id, status_code=EventStatus.MATCH_NOT_PROVIDED.value,title='failed to fetch the map json!'))
+        return resulting_events
 
     # run match
     exit_code=__judge()
@@ -133,7 +148,7 @@ def judge(players, map_id, game_id) -> [Event]:
         # extract the match stats      
         stats = str(json.load(open(match_record_path))[STATS_KEYNAME])
     except:
-        stats = """{"stats": {"winner": 1}}"""
+        stats = """{"stats": {"winner": -1}}"""
         logger.warning("failed fo fetch match stats")
     
     logging.info(f"Exit code: {exit_code}")
