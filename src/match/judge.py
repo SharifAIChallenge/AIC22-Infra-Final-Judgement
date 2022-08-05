@@ -15,7 +15,7 @@ logger=logging.getLogger("judge")
 STATS_KEYNAME = "stats"
 
 match_base_dir="/tmp/match"
-match_record_path = f"{match_base_dir}/server.log"
+match_record_path = f"{match_base_dir}/logs/winner.log"
 match_log_path = f"{match_base_dir}/logs/server.log"
 match_timeout= int(os.getenv("MATCH_TIMEOUT"))
 match_runcommand=["match", "--first-team=/etc/spawn/1", "--second-team=/etc/spawn/2", "map"]
