@@ -146,7 +146,7 @@ def judge(players, map_id, game_id) -> [Event]:
     exit_code=__judge()
     try:
         # extract the match stats      
-        stats = str(json.load(open(match_record_path))[STATS_KEYNAME])
+        stats = "{\"stats\": {}}".format(str(json.load(open(match_record_path))[STATS_KEYNAME]))
     except:
         stats = """{"stats": {"winner": -1}}"""
         logger.warning("failed fo fetch match stats")
