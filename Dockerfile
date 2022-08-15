@@ -16,7 +16,7 @@ ADD ./src ./src
 #################################### install match holder #############################
 
 # download server jar file
-RUN mkdir -p /usr/local/match && \
+RUN echo `date` && mkdir -p /usr/local/match && \
 curl --silent "https://api.github.com/repos/SharifAIChallenge/AIC22-Server/releases/latest" \
 | grep -E "browser_download_url" \
 | cut -d : -f 2,3 \
