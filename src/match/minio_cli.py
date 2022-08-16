@@ -48,6 +48,20 @@ class MinioClient:
             return False
 
     @staticmethod
+    def upload_details_logs(path, file, file_name) -> bool:  # todo change
+        content = ContentFile(file.read())
+        bucket_name = "details"
+        try:
+            client.put_object(
+                bucket_name, f'{path}/{file_name}', content, length=len(content), 
+            )
+            logger.info(f"object pushed to {bucket_name}/{path}/{file_name}")
+            return True
+        except Exception as e:
+            logger.exception(e)
+            return False
+
+    @staticmethod
     def get_compiled_code(file_id):
         try:
             response = client.get_object(BucketName.Code.value, f'compiled/{file_id}.zip')

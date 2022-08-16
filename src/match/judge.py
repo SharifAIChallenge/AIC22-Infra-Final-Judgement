@@ -17,6 +17,7 @@ STATS_KEYNAME = "stats"
 match_base_dir="/tmp/match"
 match_record_path = f"{match_base_dir}/logs/winner.log"
 match_log_path = f"{match_base_dir}/logs/server.log"
+match_detail_log_path = f"{match_base_dir}/logs/details.log"
 match_timeout= int(os.getenv("MATCH_TIMEOUT"))
 match_runcommand=["match", "--first-team=/etc/spawn/1", "--second-team=/etc/spawn/2", "map", "map-json"]
 
@@ -184,6 +185,10 @@ def judge(players, map_id, game_id) -> [Event]:
     # upload server log
     with open(match_log_path, 'rb') as file:
         if not MinioClient.upload_logs(path=game_id, file=file, file_name=f'{game_id}.log'):
+            resulting_events.append(Event(token=game_id, status_code=EventStatus.UPLOAD_FAILED.value,
+                        title='failed to upload the game server output!'))
+    with open(match_detail_log_path, 'rb') as file:
+        if not MinioClient.upload_details_logs(path=game_id, file=file, file_name=f'{game_id}.log'):
             resulting_events.append(Event(token=game_id, status_code=EventStatus.UPLOAD_FAILED.value,
                         title='failed to upload the game server output!'))
 
