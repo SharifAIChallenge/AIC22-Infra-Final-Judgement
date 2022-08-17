@@ -21,7 +21,7 @@ build:
   tags:
     - docker
   script:
-    - docker build . -t $IMAGE_URL
+    - docker build . -t $IMAGE_URL --build-arg CACHE_BUSTER=$(date +%s)
     - docker push $IMAGE_URL
 
 
