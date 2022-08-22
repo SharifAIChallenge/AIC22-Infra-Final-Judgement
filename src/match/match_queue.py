@@ -21,7 +21,7 @@ match_consumer = Consumer({
     'enable.auto.offset.store':False,
     'client.id': f'{gethostname()}',
     'enable.auto.commit': False,
-    'session.timeout.ms': 10*1000,      #10 seconds
+    'session.timeout.ms': 20*1000,      #20 seconds
     'max.poll.interval.ms': 30*60*1000,  #30 minutes
     'heartbeat.interval.ms': 1*1000     #1 seconds
 })
