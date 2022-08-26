@@ -2,3 +2,4 @@ minio==6.0.2
 Django==3.1.7
 confluent-kafka==1.9.0
 #rm==2020.12.3
+requests
