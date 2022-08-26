@@ -17,7 +17,7 @@ KAFKA_TOPIC_MATCH_1 = getenv('KAFKA_TOPIC_MATCH_1')
 match_consumer = Consumer({
     'bootstrap.servers': KAFKA_ENDPOINT,
     'group.id': KAFKA_TOPIC_CONSUMER_GROUP,
-    'auto.offset.reset': 'latest',
+    'auto.offset.reset': 'earliest',
     'enable.auto.offset.store':False,
     'client.id': f'{gethostname()}',
     'enable.auto.commit': False,
