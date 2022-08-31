@@ -26,6 +26,8 @@ while True:
         if result.status_code == 404:
             print("///////////////////////// Skipping ////////////////////////////")
             continue
+        first_team_name = result.json().get("team1")
+        second_team_name = result.json().get("team2")
     
         print(f"game_id: {token}", flush=True)
         log.new_token_logger(token)

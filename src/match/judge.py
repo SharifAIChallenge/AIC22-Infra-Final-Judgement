@@ -77,11 +77,11 @@ def download_map_json(map_id, dest) -> bool:
     return True
 
 
-def __judge() -> int:
+def __judge(first_team_name, second_team_name) -> int:
 
     try:
         logger.info("match started")
-        output = check_output(match_runcommand, stderr=STDOUT, timeout=match_timeout)
+        output = check_output(match_runcommand + [first_team_name, second_team_name], stderr=STDOUT, timeout=match_timeout)
         logger.info("match held successfully")
     except TimeoutExpired:
         logger.warning("match timeout exiceded!")
@@ -118,7 +118,7 @@ def rm_isol_area():
     logger.info(f"isolated area is removed")
 
 
-def judge(players, map_id, game_id) -> [Event]:
+def judge(players, map_id, game_id, first_team_name, second_team_name) -> [Event]:
     resulting_events = []
 
     # make an isolate area
