@@ -81,7 +81,7 @@ def __judge(first_team_name, second_team_name) -> int:
 
     try:
         logger.info("match started")
-        output = check_output(match_runcommand + [first_team_name, second_team_name], stderr=STDOUT, timeout=match_timeout)
+        output = check_output(match_runcommand + [f"--first-team-name={first_team_name}", f"--second-team-name={second_team_name}"], stderr=STDOUT, timeout=match_timeout)
         logger.info("match held successfully")
     except TimeoutExpired:
         logger.warning("match timeout exiceded!")
