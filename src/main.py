@@ -33,7 +33,7 @@ while True:
         log.new_token_logger(token)
         events.push(events.Event(token=token, status_code=events.EventStatus.MATCH_STARTED.value,title='match started successfully!'))
         
-        event_list = match.hold()
+        event_list = match.hold(first_team_name, second_team_name)
         logger.info(f"resulting events are:{len(event_list)}")
       
         events.push_all(event_list)
