@@ -144,7 +144,7 @@ def judge(players, map_id, game_id, first_team_name, second_team_name) -> [Event
         return resulting_events
 
     # run match
-    exit_code=__judge()
+    exit_code=__judge(first_team_name, second_team_name)
     try:
         # extract the match stats      
         # stats = "{\"stats\": {}}".format(str(json.load(open(match_record_path))[STATS_KEYNAME]))
