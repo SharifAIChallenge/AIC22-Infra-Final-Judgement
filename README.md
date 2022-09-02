@@ -9,3 +9,4 @@ update to 0.1.62 (fix turn problem)
 update to 0.1.63 (still fix turn problem)  
 update to 0.1.71  
 update to 0.2.00  
+update to 0.2.6
